@@ -6,7 +6,7 @@
 /*   By: vafanass <vafanass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 17:55:10 by vafanass          #+#    #+#             */
-/*   Updated: 2016/11/18 10:48:18 by vafanass         ###   ########.fr       */
+/*   Updated: 2016/12/20 22:12:25 by vafanass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <string.h>
 # include <unistd.h>
 # include <stdlib.h>
+# define BUFF_SIZE 512
 
 typedef struct		s_list
 {
@@ -71,6 +72,7 @@ char				*ft_strstr(const char *s1, const char *s2);
 char				*ft_strnstr(const char *s1, const char *s2, size_t len);
 char				*ft_strdup(const char *src);
 char				*ft_strnew(size_t size);
+char				*ft_strrev(char *str);
 char				*ft_strsub(char const *s, unsigned int start, size_t len);
 int					ft_strncmp(const char *s1, const char *s2, unsigned int n);
 int					ft_recursive_factorial(int nb);
@@ -93,6 +95,7 @@ int					ft_isspace(int c);
 int					ft_abs(int nb);
 int					ft_atoi(const char *str);
 int					ft_strnequ(char const *s1, char const *s2, size_t n);
+int					get_next_line(const int fd, char **line);
 char				*ft_itoa(int n);
 size_t				ft_strlen(const char *s);
 size_t				ft_strlcat(char *dst, const char *src, size_t size);

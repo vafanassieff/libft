@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcpy.c                                        :+:      :+:    :+:   */
+/*   ft_strrev.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vafanass <vafanass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/06 13:33:48 by vafanass          #+#    #+#             */
-/*   Updated: 2016/11/17 00:14:11 by vafanass         ###   ########.fr       */
+/*   Created: 2016/12/14 12:10:54 by vafanass          #+#    #+#             */
+/*   Updated: 2016/12/14 12:11:09 by vafanass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-void	*ft_memcpy(void *dst, const void *src, size_t n)
+char	*ft_strrev(char *str)
 {
-	unsigned char	*a;
-	unsigned char	*b;
-	
-	if (dst == NULL && src == NULL)
-		return (NULL);
-	a = (unsigned char *)dst;
-	b = (unsigned char *)src;
-	while (n--)
-		*a++ = *b++;
-	return (dst);
+	int		n;
+	int		p;
+	char	temp;
+
+	n = 0;
+	p = 0;
+	while (str[n] != '\0')
+		n++;
+	n--;
+	while (n > p)
+	{
+		temp = str[p];
+		str[p] = str[n];
+		str[n] = temp;
+		p++;
+		n--;
+	}
+	return (str);
 }

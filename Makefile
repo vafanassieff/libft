@@ -6,13 +6,13 @@
 #    By: vafanass <vafanass@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/03 15:00:14 by vafanass          #+#    #+#              #
-#    Updated: 2016/11/16 10:25:03 by vafanass         ###   ########.fr        #
+#*   Updated: 2016/12/20 22:19:46 by vafanass         ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
 
-SRC_PATH = ./
+SRC_PATH = ./srcs
 SRC_NAME = ft_bzero.c \
 		   ft_isascii.c \
 		   ft_memset.c \
@@ -79,12 +79,12 @@ SRC_NAME = ft_bzero.c \
 		   ft_abs.c \
 		   ft_islower.c \
 		   ft_isupper.c \
-		   ft_isspace.c
-
-CPPFLAGS = -I ./libft.h
+		   ft_isspace.c \
+		   ft_strrev.c \
+		   get_next_line.c
 
 CC = gcc
-CFLAGS = -Werror -Wall -Wextra -c
+CFLAGS = -Werror -Wall -Wextra -Iincludes -c
 OBJ_NAME = $(SRC_NAME:.c=.o)
 SRC = $(addprefix $(SRC_PATH)/,$(SRC_NAME))
 OBJ_PATH = ./
@@ -92,19 +92,20 @@ OBJ = $(addprefix $(OBJ_PATH)/,$(OBJ_NAME))
 AR = ar rc
 RLIB = ranlib
 RM = rm -f
-RMO = rm -rf obj
+RMO = rm -f obj
+
 
 
 all: $(NAME)
 
 $(NAME):
-		@$(CC) $(CFLAGS) $(CPPFLAGS)  $(SRC)
+		@$(CC) $(CFLAGS) $(SRC)
 		@$(AR) $(NAME) $(OBJ)
 		@$(RLIB) $(NAME)
 
+
 clean:
 	    @$(RM) $(OBJ)
-		@$(RMO)
 
 fclean: clean
 	    @$(RM)  $(NAME)
