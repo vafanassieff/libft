@@ -1,0 +1,4 @@
+minishell
+objects
+*.o
+libft.a
