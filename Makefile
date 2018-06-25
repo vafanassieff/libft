@@ -1,38 +1,112 @@
-.SUFFIXES:
-.SUFFIXES: .o .i .c
-
-# Binary
-NAME =		minishell
-DST =		./bin/
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: vafanass <vafanass@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2017/02/15 12:51:54 by vafanass          #+#    #+#              #
+#    Updated: 2018/06/25 19:01:38 by vafanass         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
 # Compilation
-CC = clang
-CFLAGS = -Werror -Wextra -Wall
+CC =		clang
+CFLAGS =	-Wall -Wextra -Werror
 ADDFLAGS =	
 
 # Default rule
-DEFRULE =	$(NAME)
+DEFRULE =	all
+
+# Binary
+NAME =		libft.a
+DST =		
 
 # Directories
-SRCDIR =	sources
-OBJDIR =	objects
-INCDIR =	includes		\
-			libft/includes	\
-
-PREDIR =	includes
+SRCDIR =	srcs
+OBJDIR =	objs
+INCDIR =	includes
+LIBDIR =	
 
 # Sources
-SRC =	other_file.c	\
-		main.c
+SRC =\
+	       ft_bzero.c \
+		   ft_isascii.c \
+		   ft_memset.c \
+		   ft_strlen.c \
+		   ft_toupper.c \
+		   ft_isalnum.c \
+		   ft_isdigit.c \
+		   ft_strcpy.c \
+		   ft_strncpy.c \
+		   ft_isalpha.c \
+		   ft_isprint.c \
+		   ft_tolower.c \
+		   ft_memcpy.c \
+		   ft_memmove.c \
+		   ft_memccpy.c \
+		   ft_strcat.c \
+		   ft_strncat.c \
+		   ft_strlcat.c \
+		   ft_strchr.c \
+		   ft_strrchr.c \
+		   ft_strcmp.c \
+		   ft_strncmp.c \
+		   ft_strstr.c \
+		   ft_strnstr.c \
+		   ft_atoi.c \
+		   ft_memchr.c \
+		   ft_memcmp.c \
+		   ft_putchar.c \
+		   ft_putstr.c \
+		   ft_putendl.c \
+		   ft_putnbr.c \
+		   ft_putchar_fd.c \
+		   ft_putstr_fd.c \
+		   ft_putendl_fd.c \
+		   ft_putnbr_fd.c \
+		   ft_strdup.c \
+		   ft_memalloc.c \
+		   ft_memdel.c \
+		   ft_strnew.c \
+		   ft_strclr.c \
+		   ft_strdel.c \
+		   ft_strequ.c \
+		   ft_strnequ.c \
+		   ft_itoa.c \
+		   ft_striter.c \
+		   ft_striteri.c \
+		   ft_strmap.c \
+		   ft_strsub.c \
+		   ft_strjoin.c \
+		   ft_strtrim.c \
+		   ft_strmapi.c \
+		   ft_strsplit.c \
+		   ft_lstnew.c \
+		   ft_lstdelone.c \
+		   ft_lstdel.c \
+		   ft_lstadd.c \
+		   ft_lstiter.c \
+		   ft_lstmap.c \
+		   ft_power.c \
+		   ft_swap.c \
+		   ft_recursive_factorial.c \
+		   ft_foreach.c \
+		   ft_sqrt.c \
+		   ft_abs.c \
+		   ft_islower.c \
+		   ft_isupper.c \
+		   ft_isspace.c \
+		   ft_strrev.c \
+		   get_next_line.c
 
+LIB =		
 OBJ =		$(SRC:.c=.o)
 
-LIBFT =		-L libft/ -lft
-
-# Paths foreach
+# Prefixes
+LLIBP =		$(addprefix -l, $(LIB))
+LIBP =		$(addprefix lib, $(LIB))
 OBJP =		$(addprefix $(OBJDIR)/, $(SRC:.c=.o))
-INCP =		$(foreach dir, $(INCDIR), -I $(dir))
-PREP =		$(addprefix $(PREDIR)/, $(PRECOMP))
 OBJS_DIRS = $(sort $(dir $(OBJP)))
 
 # **************************************************************************** #
@@ -56,44 +130,43 @@ LOG_WHITE		= \033[1;37m
 # **************************************************************************** #
 # RULES
 
+.PHONY: glu dev
+
 # Main rules
 default:
 	@echo -e "$(LOG_BOLD)Default execution: rule $(DEFRULE)$(LOG_NOCOLOR)"
 	@make $(DEFRULE)
 	@echo -e "$(LOG_BOLD)Execution finished     $(LOG_NOCOLOR)ヽ(ヅ)ノ"
+	
+
+glu: re
+	@make clean
 
 all: $(NAME)
 
-re: fclean $(NAME)
+re: fclean all
 
 # Compilation rules
-libcomp:
-	@make all -C libft/
-
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
-	@echo -e "--$(LOG_CLEAR)$(LOG_VIOLET)$(NAME)$(LOG_NOCOLOR)........................... $(LOG_YELLOW)$<$(LOG_NOCOLOR)$(LOG_UP)"
-	@$(CC) $(CFLAGS) $(ADDFLAGS) -c -o $@ $^ $(INCP)
+	@echo -e "--$(LOG_CLEAR)$(LOG_VIOLET)$(NAME)$(LOG_NOCOLOR).................... $(LOG_YELLOW)$<$(LOG_NOCOLOR)$(LOG_UP)"
+	@$(CC) $(CFLAGS) -c -o $@ $^ -I$(INCDIR)
 
 $(OBJDIR):
 	@echo -e "$(LOG_CLEAR)$(LOG_BLUE)build $(NAME)$(LOG_NOCOLOR)"
 	@mkdir -p $(OBJDIR)
 	@mkdir -p $(OBJS_DIRS)
 
-compil: $(OBJP)
-	@echo -e "--$(LOG_CLEAR)$(LOG_VIOLET)$(NAME)$(LOG_NOCOLOR)......................... $(LOG_YELLOW)assembling$(LOG_NOCOLOR)$(LOG_UP)"
-	@$(CC) $(CFLAGS)$(ADDFLAGS)$(LPTHR) -o $(NAME) $^ $(LIBFT) $(INCP)
-	@echo -e "--$(LOG_CLEAR)$(LOG_VIOLET)$(NAME)$(LOG_NOCOLOR) compiled.................. $(LOG_GREEN)✓$(LOG_NOCOLOR)"
-
-$(NAME): libcomp $(OBJDIR) compil
+$(NAME): $(OBJDIR) $(OBJP)
+	@echo -e "--$(LOG_CLEAR)$(LOG_VIOLET)$(NAME)$(LOG_NOCOLOR)..................... $(LOG_YELLOW)assembling$(LOG_NOCOLOR)$(LOG_UP)"
+	@ar rc $(DST)$(NAME) $(OBJP)
+	@ranlib $(DST)$(NAME)
+	@echo -e "--$(LOG_CLEAR)$(LOG_VIOLET)$(NAME)$(LOG_NOCOLOR) compiled........... $(LOG_GREEN)✓$(LOG_NOCOLOR)"
 
 # MrProper's legacy
-.PHONY: fclean clean glu
-
 clean:
-	@echo -e "$(LOG_CLEAR)$(LOG_BLUE)clean $(NAME)$(LOG_NOCOLOR)"
+	@echo -e "$(LOG_CLEAR)$(LOG_BLUE)fclean $(NAME)$(LOG_NOCOLOR)"
 	@echo -e "--$(LOG_CLEAR)$(LOG_YELLOW)Objects$(LOG_NOCOLOR) deletion............. $(LOG_RED)×$(LOG_NOCOLOR)"
 	@rm -rf $(OBJDIR)
-	@make clean -C libft/
 
 fclean:
 	@echo -e "$(LOG_CLEAR)$(LOG_BLUE)fclean $(NAME)$(LOG_NOCOLOR)"
@@ -101,6 +174,3 @@ fclean:
 	@rm -rf $(OBJDIR)
 	@echo -e "--$(LOG_CLEAR)$(LOG_YELLOW)Binary$(LOG_NOCOLOR) deletion.............. $(LOG_RED)×$(LOG_NOCOLOR)"
 	@rm -f $(NAME)
-	@make fclean -C libft/
-
-glu: re clean

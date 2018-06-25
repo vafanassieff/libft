@@ -1,3 +1,3 @@
-# Minishell
+# Libft
 
-A simple shell written in C
+Une belle libft @42.
